@@ -41,7 +41,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
     $ git clone https://github.com/drishtitrivedi/PubSub
     $ cd PubSub
-    $ yarn install
+    $ npm install
 
 
 ## Running the project
@@ -51,3 +51,9 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 ## Simple build for production
 
     $ npm build
+    
+## Curl Request Changes for POST request
+    I added Content-Type to the curl request as it was missing. Updated curl requests can be found below:
+    
+    curl -X POST -H "Content-Type: application/json" -d '{ "url": "http://localhost:8000/event"}' http://localhost:8000/subscribe/topic1
+    curl -X POST -H "Content-Type: application/json" -d '{"message": "hello"}' http://localhost:8000/publish/topic1
