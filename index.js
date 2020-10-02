@@ -41,6 +41,9 @@ app.post("/publish/:topic", (req, res, next) => {
     console.log("Subscriber", subscriber);
     req.url = subscriber.eventUrl;
     req.method = "GET";
+    req.body.topic = req.params.topic;
+    console.log("request url", req.url);
+    console.log("request body", req.body);
 
     // request forwarding to the subscribed event url
     app._router.handle(req, res, next);
