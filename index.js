@@ -5,7 +5,8 @@ const app = express();
 // Enable Parsing JSON object
 app.use(express.json());
 
-const subscribers = [];
+let subscribers = [];
+let publish = [];
 
 // -------------------------------------------- HTTP GET request ---------------------------------
 app.get("/", (req, res) => {
@@ -13,14 +14,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/event", (req, res) => {
-  console.log("Event Data", req.body);
+  //console.log("Event Data", req.body);
 });
 
 // -------------------------------------------- HTTP POST request ------------------------------
 
 app.post("/subscribe/:topic", (req, res) => {
-  console.log(req.body);
-
   const new_sub = {
     topic: req.params.topic,
     eventUrl: req.body.url,
@@ -37,10 +36,16 @@ app.post("/publish/:topic", (req, res, next) => {
     return subscriber.topic === req.params.topic;
   });
 
+  let res_data = [];
+
   eventSubscribers.forEach((subscriber) => {
-    console.log("Subscriber", subscriber);
+    //console.log("Subscriber", subscriber);
+
     req.url = subscriber.eventUrl;
     req.method = "GET";
+    req.body.topic = req.params.topic;
+    console.log("request url", req.url);
+    console.log("request body", req.body);
 
     // request forwarding to the subscribed event url
     app._router.handle(req, res, next);
